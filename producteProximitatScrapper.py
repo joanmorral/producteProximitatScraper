@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import argparse
 from datetime import datetime
 import pandas as pd
+import re
 from geopy.geocoders import Nominatim
 from geopy import distance
 
@@ -92,6 +93,104 @@ def info_prod_alimentacio(enllac_producte):
 
     return caracteristiques
 
+def nom_prod(caracteristiques):
+    try:
+        nom = caracteristiques[0]
+    except:
+        nom = 'NULL'
+    return nom
+
+def format_prod(caracteristiques):
+    try:
+        #print(característiques[1])
+        format = caracteristiques[1]
+    except:
+        format='NULL'
+    return format
+
+def preu_prod(caracteristiques):
+    try:
+        preu = caracteristiques[2].replace('\xa0', '').replace('€', '').replace('\xa0€', '').replace(',', '.')
+    except:
+        preu = 'NULL'
+    return preu
+
+def preu_vol_prod(caracteristiques):
+    try:
+        preu_vol = caracteristiques[3].replace('\xa0', '').replace('€', '').replace('\xa0€', '').replace(',', '.')
+    except:
+        preu_vol = 'NULL'
+    return preu_vol
+
+def info_prod(caracteristiques):
+    try:
+        info = caracteristiques[4]
+    except:
+        info = 'NULL'
+    return info
+
+def marca_prod(caracteristiques):
+    try:
+        marca = caracteristiques[5]
+    except:
+        marca = 'NULL'
+    return marca
+
+def direccio_prod(caracteristiques):
+    try:
+        #print(característiques[6])
+        CP = re.findall('\d{5}', caracteristiques[6].split("Avís", 1)[0])[0]
+        direccio = CP + ',' + caracteristiques[6].split("Avís", 1)[0].split(CP, 1)[1].replace('.', '')
+    except:
+        direccio='NULL'
+    return direccio
+
+def ingredients_prod(caracteristiques):
+    try:
+        ingredients = caracteristiques[7]
+    except:
+        ingredients = 'NULL'
+    return ingredients
+
+def nutri_prod(caracteristiques):
+    try:
+        nutri = caracteristiques[8]
+    except:
+        nutri = 'NULL'
+    return nutri
+
+def instr_prod(caracteristiques):
+    try:
+        instruccions = caracteristiques[9]
+    except:
+        instruccions = 'NULL'
+    return instruccions
+
+def localitzacio(direccio):
+    try:
+        geolocator = Nominatim(user_agent="myapp")
+        location = geolocator.geocode(direccio)
+    except:
+        location = 'NULL'
+    return location
+
+def latitud_prod(location):
+    try:
+        latitud = location.latitude
+    except:
+        latitud = 0
+    return latitud
+
+def longitud_prod(location):
+    try:
+        longitud = location.latitude
+    except:
+        longitud = 0
+    return longitud
+
+def retard_engany():
+
+    return
 
 def producte(llista_subsubcategories):
     nova_fila = {}
@@ -103,27 +202,30 @@ def producte(llista_subsubcategories):
 
         for categoria4 in soup4.find_all('div', class_='base__Body-sc-7vdzdx-29 bwaBvn'):
             enllac_producte = 'https://www.compraonline.bonpreuesclat.cat' + categoria4.a.get('href')
-            print(enllac_producte)
+            #print(enllac_producte)
             caracteristiques = info_prod_alimentacio(enllac_producte)
             print(caracteristiques)
             try:
+                location = localitzacio(direccio_prod(caracteristiques))
                 nova_fila = {'cadena': 'BonPreu',
-                             'nom_producte': caracteristiques[0],
-                             'format': caracteristiques[1],
-                             'preu': caracteristiques[2].replace('\xa0', '').replace('€', '').replace('\xa0€', '').replace(
-                                 ',', '.'),
-                             'preu_volum': caracteristiques[3],
-                             'info_prod': caracteristiques[4],
-                             'marca': caracteristiques[5],
-                             'descr_add': caracteristiques[6],
-                             'ingredients': caracteristiques[7],
-                             'dades_nutri': caracteristiques[8]
-                            ,'instr': caracteristiques[9]
+                             'nom_producte': nom_prod(caracteristiques),
+                             'format': format_prod(caracteristiques),
+                             'preu': preu_prod(caracteristiques),
+                             'preu_volum': preu_vol_prod(caracteristiques),
+                             'info_prod': info_prod(caracteristiques),
+                             'marca': marca_prod(caracteristiques),
+                             'direccio': direccio_prod(caracteristiques),
+                             'latitud': latitud_prod(location),
+                             'longitud': longitud_prod(location),
+                             'ingredients': ingredients_prod(caracteristiques),
+                             'dades_nutri': nutri_prod(caracteristiques),
+                             'instr': instr_prod(caracteristiques)
                               }
                 #print(nova_fila)
                 df = df.append(nova_fila, ignore_index=True)
             except:
                 print('error' + nova_fila)
+                guardaCSV(df)
     return df
 
 def guardaCSV(df):
