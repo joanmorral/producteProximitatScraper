@@ -44,6 +44,12 @@ def getCategories(soup):
     return llista_categories
 
 def getSubcategories(soup, llista_categories):
+    '''
+
+    :param soup:
+    :param llista_categories:
+    :return:
+    '''
     llista_subcategories = []
     for llista_categories_url in llista_categories:
         print('============================')
@@ -94,6 +100,11 @@ def info_prod_alimentacio(enllac_producte):
     return caracteristiques
 
 def nom_prod(caracteristiques):
+    '''
+
+    :param caracteristiques:
+    :return:
+    '''
     try:
         nom = caracteristiques[0]
     except:
@@ -101,6 +112,11 @@ def nom_prod(caracteristiques):
     return nom
 
 def format_prod(caracteristiques):
+    '''
+    
+    :param caracteristiques: 
+    :return: 
+    '''''
     try:
         #print(característiques[1])
         format = caracteristiques[1]
@@ -109,6 +125,11 @@ def format_prod(caracteristiques):
     return format
 
 def preu_prod(caracteristiques):
+    '''
+
+    :param caracteristiques:
+    :return:
+    '''
     try:
         preu = caracteristiques[2].replace('\xa0', '').replace('€', '').replace('\xa0€', '').replace(',', '.')
     except:
@@ -116,6 +137,11 @@ def preu_prod(caracteristiques):
     return preu
 
 def preu_vol_prod(caracteristiques):
+    '''
+
+    :param caracteristiques:
+    :return:
+    '''
     try:
         preu_vol = caracteristiques[3].replace('\xa0', '').replace('€', '').replace('\xa0€', '').replace(',', '.')
     except:
@@ -123,6 +149,11 @@ def preu_vol_prod(caracteristiques):
     return preu_vol
 
 def info_prod(caracteristiques):
+    '''
+
+    :param caracteristiques:
+    :return:
+    '''
     try:
         info = caracteristiques[4]
     except:
@@ -130,6 +161,11 @@ def info_prod(caracteristiques):
     return info
 
 def marca_prod(caracteristiques):
+    '''
+
+    :param caracteristiques:
+    :return:
+    '''
     try:
         marca = caracteristiques[5]
     except:
@@ -137,6 +173,11 @@ def marca_prod(caracteristiques):
     return marca
 
 def direccio_prod(caracteristiques):
+    '''
+
+    :param caracteristiques:
+    :return:
+    '''
     try:
         #print(característiques[6])
         CP = re.findall('\d{5}', caracteristiques[6].split("Avís", 1)[0])[0]
@@ -146,6 +187,11 @@ def direccio_prod(caracteristiques):
     return direccio
 
 def ingredients_prod(caracteristiques):
+    '''
+
+    :param caracteristiques:
+    :return:
+    '''
     try:
         ingredients = caracteristiques[7]
     except:
@@ -153,6 +199,11 @@ def ingredients_prod(caracteristiques):
     return ingredients
 
 def nutri_prod(caracteristiques):
+    '''
+
+    :param caracteristiques:
+    :return:
+    '''
     try:
         nutri = caracteristiques[8]
     except:
@@ -160,6 +211,11 @@ def nutri_prod(caracteristiques):
     return nutri
 
 def instr_prod(caracteristiques):
+    '''
+
+    :param caracteristiques:
+    :return:
+    '''
     try:
         instruccions = caracteristiques[9]
     except:
@@ -167,6 +223,11 @@ def instr_prod(caracteristiques):
     return instruccions
 
 def localitzacio(direccio):
+    '''
+
+    :param direccio:
+    :return:
+    '''
     try:
         geolocator = Nominatim(user_agent="myapp")
         location = geolocator.geocode(direccio)
@@ -175,6 +236,11 @@ def localitzacio(direccio):
     return location
 
 def latitud_prod(location):
+    '''
+
+    :param location:
+    :return:
+    '''
     try:
         latitud = location.latitude
     except:
@@ -182,17 +248,31 @@ def latitud_prod(location):
     return latitud
 
 def longitud_prod(location):
+    '''
+
+    :param location:
+    :return:
+    '''
     try:
-        longitud = location.latitude
+        longitud = location.longitude
     except:
         longitud = 0
     return longitud
 
 def retard_engany():
+    '''
+
+    :return:
+    '''
 
     return
 
 def producte(llista_subsubcategories):
+    '''
+
+    :param llista_subsubcategories:
+    :return:
+    '''
     nova_fila = {}
     df = pd.DataFrame()
     for llista_subsubcategories_url in llista_subsubcategories:
@@ -208,6 +288,7 @@ def producte(llista_subsubcategories):
             try:
                 location = localitzacio(direccio_prod(caracteristiques))
                 nova_fila = {'cadena': 'BonPreu',
+                             'subcategoria': llista_subsubcategories_url.split(';')[0],
                              'nom_producte': nom_prod(caracteristiques),
                              'format': format_prod(caracteristiques),
                              'preu': preu_prod(caracteristiques),
@@ -229,7 +310,8 @@ def producte(llista_subsubcategories):
     return df
 
 def guardaCSV(df):
-    df.to_csv('BonPreu-Llistat_de_productes.csv', index=False)
+
+    df.to_csv('Llistat_de_productes.csv', index=False)
     return
 
 
