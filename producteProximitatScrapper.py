@@ -1,20 +1,27 @@
 import requests
 from bs4 import BeautifulSoup
 import argparse
-from datetime import datetime
+import time
 import pandas as pd
 import re
+from random import randrange
 from geopy.geocoders import Nominatim
 from geopy import distance
 
+# Enllaç a la tenda online de BonPreu
 url = 'https://www.compraonline.bonpreuesclat.cat/products?source=navigation'
+supermercat = soup.title.contents[0].split(" ", 1)[0]
 
-#Parse command line arguments
+# Parse command line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--categoria", help="Entra la categoria de productes")
+parser.add_argument("--baixallista", help="Si indica que vols descarregar la llista")
+parser.add_argument("--categoria", help="Entra la categoria dels productes que vols descarregar. Si no s'especifica "
+                                        "es baixen tots els camps.")
+parser.add_argument("--localitat", help="Introdueix CP del client", nargs="*", type=str)
+parser.add_argument("--llista", help="Introdueix una llista de la compra", nargs="*", type=str)
 args = parser.parse_args()
+#print(args)
 
-print(args)
 
 def getPage(url):
     '''
@@ -26,26 +33,29 @@ def getPage(url):
     soup = BeautifulSoup(page.content, 'html.parser')
     return soup
 
+
 def getCategories(soup):
     '''
     Funció per llegir les categories principals
     :param soup:
     :return:
     '''
-    llista_categories=[]
+    llista_categories = []
     categories = soup.find('div', class_='spacing__Spacing-sc-5fzqe7-0 gegAoq')
-    #print(categories.prettify())
+    # print(categories.prettify())
     print('Llista de categories habilitades')
     print('=================================')
     for categoria in categories.find_all('a', class_='anchor__Anchor-sc-8ir86-0 ipYsWX'):
-        llista_categories.append(categoria.text.strip() + ';' + 'https://www.compraonline.bonpreuesclat.cat' + categoria.get('href'))
-        #print(categoria.text.strip() + ' - ' + 'https://www.compraonline.bonpreuesclat.cat' + categoria.get('href'))
+        llista_categories.append(
+            categoria.text.strip() + ';' + 'https://www.compraonline.bonpreuesclat.cat' + categoria.get('href'))
+        # print(categoria.text.strip() + ' - ' + 'https://www.compraonline.bonpreuesclat.cat' + categoria.get('href'))
         print(categoria.text.strip())
     return llista_categories
 
+
 def getSubcategories(soup, llista_categories):
     '''
-
+    Funció per a llegir les subcategories d'una pàgina, serveix per subsubcatgories
     :param soup:
     :param llista_categories:
     :return:
@@ -63,15 +73,15 @@ def getSubcategories(soup, llista_categories):
                 llista_subcategories.append(
                     subcategoria.text.strip() + ';' + 'https://www.compraonline.bonpreuesclat.cat' + subcategoria.get(
                         'href'))
-                #print(subcategoria.text.strip() + ' - ' + 'https://www.compraonline.bonpreuesclat.cat' + subcategoria.get(
+                # print(subcategoria.text.strip() + ' - ' + 'https://www.compraonline.bonpreuesclat.cat' + subcategoria.get(
                 #    'href'))
                 print(subcategoria.text.strip())
         except:
             # En cas que no hi hagi subcategoria ha de romandre l'anterior com a terminal
-            #llista_subcategories.append(subcategories)
-            #print(llista_categories_url.split(';')[0] + ',' + llista_categories_url.split(';')[1])
+            # llista_subcategories.append(subcategories)
+            # print(llista_categories_url.split(';')[0] + ',' + llista_categories_url.split(';')[1])
             llista_subcategories.append(
-                    subcategoria.text.strip() + ';' + llista_categories_url.split(';')[1])
+                subcategoria.text.strip() + ';' + llista_categories_url.split(';')[1])
     return llista_subcategories
 
 
@@ -95,13 +105,14 @@ def info_prod_alimentacio(enllac_producte):
     info = pagina_producte.find('div', class_='Col-sc-3u3i8h-0 gRPIeN')
     for s in info.find_all('div', class_='static-content-wrapper__StaticContentWrapper-sc-1dfgbbt-0 Ziamt'):
         caracteristiques.append(s.text)
-        #print(s.text)
+        # print(s.text)
 
     return caracteristiques
 
+
 def nom_prod(caracteristiques):
     '''
-
+    Funció d'extracció del nom de producte
     :param caracteristiques:
     :return:
     '''
@@ -111,22 +122,24 @@ def nom_prod(caracteristiques):
         nom = 'NULL'
     return nom
 
+
 def format_prod(caracteristiques):
     '''
-    
+    Funció del format amb el que es presenta el producte
     :param caracteristiques: 
     :return: 
     '''''
     try:
-        #print(característiques[1])
+        # print(característiques[1])
         format = caracteristiques[1]
     except:
-        format='NULL'
+        format = 'NULL'
     return format
+
 
 def preu_prod(caracteristiques):
     '''
-
+    Funció tractament del preu del producte
     :param caracteristiques:
     :return:
     '''
@@ -136,9 +149,10 @@ def preu_prod(caracteristiques):
         preu = 'NULL'
     return preu
 
+
 def preu_vol_prod(caracteristiques):
     '''
-
+    Funció tractament del volum del producte
     :param caracteristiques:
     :return:
     '''
@@ -148,9 +162,10 @@ def preu_vol_prod(caracteristiques):
         preu_vol = 'NULL'
     return preu_vol
 
+
 def info_prod(caracteristiques):
     '''
-
+    Funció de tractament de la informació del producte
     :param caracteristiques:
     :return:
     '''
@@ -160,9 +175,10 @@ def info_prod(caracteristiques):
         info = 'NULL'
     return info
 
+
 def marca_prod(caracteristiques):
     '''
-
+    Funció per extreure la marca del producte
     :param caracteristiques:
     :return:
     '''
@@ -172,23 +188,25 @@ def marca_prod(caracteristiques):
         marca = 'NULL'
     return marca
 
+
 def direccio_prod(caracteristiques):
     '''
-
+    Funció per extreure la direcció del producte
     :param caracteristiques:
     :return:
     '''
     try:
-        #print(característiques[6])
+        # print(característiques[6])
         CP = re.findall('\d{5}', caracteristiques[6].split("Avís", 1)[0])[0]
         direccio = CP + ',' + caracteristiques[6].split("Avís", 1)[0].split(CP, 1)[1].replace('.', '')
     except:
-        direccio='NULL'
+        direccio = 'NULL'
     return direccio
+
 
 def ingredients_prod(caracteristiques):
     '''
-
+    Funció per extreure els ingredients del producte
     :param caracteristiques:
     :return:
     '''
@@ -198,9 +216,10 @@ def ingredients_prod(caracteristiques):
         ingredients = 'NULL'
     return ingredients
 
+
 def nutri_prod(caracteristiques):
     '''
-
+    Funció per extreure els valors nutricionals dels productes alimentaris
     :param caracteristiques:
     :return:
     '''
@@ -210,9 +229,10 @@ def nutri_prod(caracteristiques):
         nutri = 'NULL'
     return nutri
 
+
 def instr_prod(caracteristiques):
     '''
-
+    Funció per extreure les dades de emmagatzematge dels productes
     :param caracteristiques:
     :return:
     '''
@@ -222,9 +242,10 @@ def instr_prod(caracteristiques):
         instruccions = 'NULL'
     return instruccions
 
+
 def localitzacio(direccio):
     '''
-
+    Funció per aconseguir les dades corresponents a una direcció associada
     :param direccio:
     :return:
     '''
@@ -235,9 +256,10 @@ def localitzacio(direccio):
         location = 'NULL'
     return location
 
+
 def latitud_prod(location):
     '''
-
+    Funció per aconseguir la latitud un cop se li passa el conjunt d'informació de geoposicionament de Nominatim
     :param location:
     :return:
     '''
@@ -247,9 +269,10 @@ def latitud_prod(location):
         latitud = 0
     return latitud
 
+
 def longitud_prod(location):
     '''
-
+    Funció per aconseguir la longitud un cop se li passa el conjunt d'informació de geoposicionament de Nominatim
     :param location:
     :return:
     '''
@@ -259,17 +282,19 @@ def longitud_prod(location):
         longitud = 0
     return longitud
 
+
 def retard_engany():
     '''
-
+    Funció per processar a l'engany del mecanisme de detecció de bots (tot i que no s'ha identificat a BonPreu)
     :return:
     '''
-
+    time.sleep(randrange(5))
     return
+
 
 def producte(llista_subsubcategories):
     '''
-
+    Funció que navega per cada pàgina de producte de les seccions carregades a la llista i en captura la info en un dataframe
     :param llista_subsubcategories:
     :return:
     '''
@@ -282,7 +307,7 @@ def producte(llista_subsubcategories):
 
         for categoria4 in soup4.find_all('div', class_='base__Body-sc-7vdzdx-29 bwaBvn'):
             enllac_producte = 'https://www.compraonline.bonpreuesclat.cat' + categoria4.a.get('href')
-            #print(enllac_producte)
+            # print(enllac_producte)
             caracteristiques = info_prod_alimentacio(enllac_producte)
             print(caracteristiques)
             try:
@@ -301,33 +326,84 @@ def producte(llista_subsubcategories):
                              'ingredients': ingredients_prod(caracteristiques),
                              'dades_nutri': nutri_prod(caracteristiques),
                              'instr': instr_prod(caracteristiques)
-                              }
-                #print(nova_fila)
+                             }
+                # print(nova_fila)
                 df = df.append(nova_fila, ignore_index=True)
             except:
                 print('error' + nova_fila)
-                guardaCSV(df)
+                guardaCSV(df, supermercat)
     return df
 
-def guardaCSV(df):
 
-    df.to_csv('Llistat_de_productes.csv', index=False)
+def guardaCSV(df, supermercat):
+    '''
+    Funció encarregada de guardar la informació en un CSV
+    :param df:
+    :return:
+    '''
+    # Consulta la data i la hora
+    named_tuple = time.localtime()
+    time_string = time.strftime("%Y%m%d_%H%M%S", named_tuple)
+    # Defineix el nom del fitxer
+    nom_csv = time_string + '_' + supermercat + '_productes.csv'
+    df.to_csv(nom_csv, index=False)
     return
 
 
-soup=getPage(url)
-llista_categories=getCategories(soup)
+def baixaLlista():
+    '''
+    Funció per a descarregar la llista de productes del supermercat online
+    :return:
+    '''
+    soup = getPage(url)
+    llista_categories = getCategories(soup)
 
-filtrada=[]
-for grup in llista_categories:
-    #if grup.split(';')[0] == 'Alimentació' or grup.split(';')[0]=='Begudes' or grup.split(';')[0]=='Frescos' or grup.split(';')[0]=='Congelats' or grup.split(';')[0]=='Làctics i ous' or grup.split(';')[0]=='Eco, sense gluten i lactosa, vegetarians i vegans':
-    if grup.split(';')[0] == 'Alimentació':
-        filtrada.append(grup)
+    filtrada = []
+    for grup in llista_categories:
+        if grup.split(';')[0] == 'Alimentació' or grup.split(';')[0]=='Begudes' or grup.split(';')[0]=='Frescos' or grup.split(';')[0]=='Congelats' or grup.split(';')[0]=='Làctics i ous' or grup.split(';')[0]=='Eco, sense gluten i lactosa, vegetarians i vegans':
+        #if grup.split(';')[0] == 'Alimentació':
+            filtrada.append(grup)
 
-print(filtrada)
-llista_categories = filtrada
+    print(filtrada)
+    llista_categories = filtrada
 
-llista_subcategories=getSubcategories(soup, llista_categories)
-llista_2subcategories=getSubcategories(soup, llista_subcategories)
-df = producte(llista_2subcategories)
-guardaCSV(df)
+    llista_subcategories = getSubcategories(soup, llista_categories)
+    llista_2subcategories = getSubcategories(soup, llista_subcategories)
+    df = producte(llista_2subcategories)
+    guardaCSV(df, supermercat)
+    return
+
+
+def consultaLlista(args):
+    '''
+    Funció encarregada de llegir la localització del client i calcular la distància fins a l'emrpresa productora
+    :param args:
+    :return:
+    '''
+    # Identificació del client
+    posicio_client = localitzacio(args.localitat)
+    # print(posicio_client)
+    lat_client = latitud_prod(posicio_client)
+    long_client = longitud_prod(posicio_client)
+    geopos = (lat_client, long_client)
+    print(geopos)
+
+    # Carga CSV de consulta
+    df = pd.read_csv('Llistat_de_productes.csv')
+
+    # Cerca de proximitat en la llista
+    for x in range(len(args.llista)):
+        article = (args.llista[x])
+        fabrica_loc = ((df[df['nom_producte'] == str(article)]['latitud'].iloc[0]),
+                       (df[df['nom_producte'] == str(article)]['longitud'].iloc[0]))
+        km = distance.distance(geopos, fabrica_loc).km
+        print(article + '- proximitat:' + '%.2f' % km + 'km')
+    return posicio_client
+
+
+if args.baixallista == 'si':
+    baixaLlista()
+
+# python producteProximitatScrapper.py --localitat 08202 Sabadell --llista "NOCILLA Crema de cacau amb avellanes" "GULLÓN Galetes de xocolata sense sucres" "BIMBO Panets rodons per hamburgueses" "FERRER Cigrons cuits" "BONDUELLE Blat de moro ecològic"
+# consultaLlista(args)
+
