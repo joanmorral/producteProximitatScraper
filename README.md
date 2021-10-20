@@ -3,7 +3,7 @@
 ## Resum
 
 Sovint comprem productes sense conèixer la seva procedència. 
-Amb la voluntat de fomentar el quilòmetre 0, el scrapper captura els productes del catàleg de Bon Preu Esclat en la recerca de l'origen dels productes.
+Amb la voluntat de fomentar el quilòmetre 0, el scrapper captura els productes del catàleg de Bonpreu-Esclat en la recerca de l'origen dels productes.
 Aleshores, amb l'ajuda d'una API trobem la longitud i latitud relatives al producte, de forma que en un futur permetin identificar la distància entre el productor i el consumidor.
 
 El sistema permet respondre a preguntes com:
@@ -26,10 +26,13 @@ El treball ha estat realitzat en grup, essent-ne els integrants:
 - **Readme.md:**
 - **producteProximitatScrapper.py:**
 - **Llistat_de_productes.csv:**  (canviar el nom ???)
-- **producteProximitatScrapper_video.mp4:** 
+- **Practica1_respostes.pdf:** 
+- **Practica1_video.mp4:** 
 
-## DOI del fitxer de productes resultants (.csv)
+## DOI del dataset generat
 
+El dataset generat porta per títol *Anàlisi de la proximitat dels productes venuts a Bonpreu-Esclat*.
+Es troba emmagatzemat en format CSV a Zenodo, amb DOI: 
 
 ## Instruccions d'execució
 
