@@ -3,8 +3,10 @@
 ## Resum
 
 Sovint comprem productes sense conèixer la seva procedència. 
-Amb la voluntat de fomentar el quilòmetre 0, el scraper captura els productes del catàleg de Bonpreu-Esclat en la recerca de l'origen dels productes.
+Amb la voluntat de fomentar el quilòmetre 0 i reduïr la petjada de carboni, el scraper captura els productes del catàleg de Bonpreu-Esclat en la recerca de l'origen dels productes.
 Aleshores, amb l'ajuda d'una API trobem la longitud i latitud relatives al producte, de forma que en un futur permetin identificar la distància entre el productor i el consumidor.
+El resultat és una forma senzilla de contribuir en el objectiu 12 de consum responsable en els The Global Goals 2030.
+![img.png](img/infographic_cc_globalgoals2030.png)
 
 El sistema permet respondre a preguntes com:
 - Existeix un increment de cost entre el producte més pròxim i el més forani?
@@ -23,29 +25,30 @@ El treball ha estat realitzat en grup, essent-ne els integrants:
 
 ## Contingut del repositori
 
-- **Readme.md:**
-- **producteProximitatScrapper.py:**
-- **productesProximitat_bonpreu.csv:**
-- **Practica1_respostes.pdf:** 
-- **Practica1_video.mp4:** 
-
+- **Readme.md:** exposa breument el contingut de la pràctica
+- **src/producteProximitatScrapper.py:** codi font del programa
+- **csv/productesProximitat_bonpreu.csv:** dataset resultant de recórrer la tenda en línia de BonPreu-Esclat
+- **pdf/productesProximitatScraper.pdf:** document pdf amb les respostes
+- **pres/productesProximitatScraper_video.mp4:** gravació de la presentació
+- **pres/productesProximitatScraper_slides.pptx:** suport emprat en la presentació del fitxer 
 ## DOI del dataset generat
 
 El dataset generat porta per títol ***Proximitat dels productes venuts a Bonpreu-Esclat***.  
 Es troba emmagatzemat en format CSV a Zenodo, amb DOI: 
 
 ## Instruccions d'execució
+L'entorn d'execució del programa pot ser des de la mateixa consola o terminal. En un entorn Windows es pot accedir executant la comanda cmd un cop desplegat el menú de inici. Aleshores, cal cercar el directori on es troba el codi i executar-lo posant davant la instrucció python. 
 
 ### Càrrega de llibreries necessàries
-Per executar el script és necessari instal·lar les següents biblioteques:
+Per executar el script és necessari instal·lar o tenir instal·lades les següents llibreries Python:
 
 ```python
-import requests
-from bs4 import BeautifulSoup
-from datetime import datetime
-import pandas as pd
-from geopy.geocoders import Nominatim
-from geopy import distance
+pip install requests
+pip install beautifulsoup4
+pip install DateTime
+pip install pandas
+pip install geopy
+pip install plotly
 ```
 
 ### Descàrrega del llistat de productes

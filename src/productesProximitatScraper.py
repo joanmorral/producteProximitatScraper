@@ -12,8 +12,6 @@ import plotly.express as px
 # Parse command line arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("--baixallista", help="Si indica que vols descarregar la llista")
-parser.add_argument("--categoria", help="Entra la categoria dels productes que vols descarregar. Si no s'especifica "
-                                        "es baixen tots els camps.")
 parser.add_argument("--localitat", help="Introdueix CP del client", nargs="*", type=str)
 parser.add_argument("--llista", help="Introdueix una llista de la compra", nargs="*", type=str)
 args = parser.parse_args()
@@ -320,7 +318,7 @@ def producte(llista_subsubcategories):
                              'subcategoria': llista_subsubcategories_url.split(';')[0],
                              'nom_producte': nom_prod(caracteristiques),
                              'format': format_prod(caracteristiques),
-                             'preu': preu_prod(caracteristiques),
+                             'preu_euros': preu_prod(caracteristiques),
                              'preu_volum': preu_vol_prod(caracteristiques),
                              'info_prod': info_prod(caracteristiques),
                              'marca': marca_prod(caracteristiques),
@@ -405,7 +403,7 @@ def consultaLlista(args):
         km = distance.distance(geopos, fabrica_loc).km
         print(article + '- proximitat:' + '%.2f' % km + 'km')
 
-        taula = {'lat': df[df['nom_producte'] == str(article)]['latitud'].iloc[0], 'lon': df[df['nom_producte'] == str(article)]['longitud'].iloc[0], 'distance': km, 'producte': args.llista[x], 'preu': str(df[df['nom_producte'] == str(article)]['preu'].iloc[0])+'€'}
+        taula = {'lat': df[df['nom_producte'] == str(article)]['latitud'].iloc[0], 'lon': df[df['nom_producte'] == str(article)]['longitud'].iloc[0], 'distance': km, 'producte': args.llista[x], 'preu': str(df[df['nom_producte'] == str(article)]['preu_euros'].iloc[0])+'€'}
         df_map = df_map.append(taula, ignore_index=True)
 
 
@@ -427,5 +425,3 @@ elif args.localitat != '':
     consultaLlista(args)
 else:
     print("Selecciona una acció a través dels paràmetres.")
-
-
