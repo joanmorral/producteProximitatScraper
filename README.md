@@ -1,9 +1,9 @@
-# producteProximitatScraper
+# productesProximitatScraper
 
 ## Resum
 
 Sovint comprem productes sense conèixer la seva procedència. 
-Amb la voluntat de fomentar el quilòmetre 0, el scrapper captura els productes del catàleg de Bonpreu-Esclat en la recerca de l'origen dels productes.
+Amb la voluntat de fomentar el quilòmetre 0, el scraper captura els productes del catàleg de Bonpreu-Esclat en la recerca de l'origen dels productes.
 Aleshores, amb l'ajuda d'una API trobem la longitud i latitud relatives al producte, de forma que en un futur permetin identificar la distància entre el productor i el consumidor.
 
 El sistema permet respondre a preguntes com:
@@ -25,7 +25,7 @@ El treball ha estat realitzat en grup, essent-ne els integrants:
 
 - **Readme.md:**
 - **producteProximitatScrapper.py:**
-- **Llistat_de_productes.csv:**  (canviar el nom ???)
+- **productesProximitat_bonpreu.csv:**
 - **Practica1_respostes.pdf:** 
 - **Practica1_video.mp4:** 
 
@@ -36,6 +36,7 @@ Es troba emmagatzemat en format CSV a Zenodo, amb DOI:
 
 ## Instruccions d'execució
 
+### Càrrega de llibreries necessàries
 Per executar el script és necessari instal·lar les següents biblioteques:
 
 ```python
@@ -47,12 +48,29 @@ from geopy.geocoders import Nominatim
 from geopy import distance
 ```
 
-El script s'ha d'executar de la següent manera:
-
+### Descàrrega del llistat de productes
+Per a descarregar la llista del supermercat BonPreu-Esclat cal emprar la següent instrucció:
 ```python
-python producteProximitatScrapper.py --categories 'Llistes'
+python productesProximitatScraper.py --baixallista bp
+```
+![img.png](img/captura_procescarregaproductes.png)
+
+**Figura 1.** Captura del procés de càrrega
+
+### Consulta de la distància dels articles d'una llista de la compra
+La commanda per executar la consulta consta de dos paràmetres:
+- paràmetre **--localitat** per posar el CP i població del consumidor
+- paràmetre **--llista** acompanyat dels noms dels articles de la tenda de BonPreu-Esclat, cada nom s'ha de posar entre cometes i separant els articles amb espais: **"producte1" "producte2" "producte3"** ... 
+
+A continuació es presenta un exemple: 
+```python
+python productesProximitatScraper.py --localitat 08202 Sabadell --llista "NOCILLA Crema de cacau amb avellanes" "EL PASTORET Iogurt estil grec artesà ecològic" "BIMBO Panets rodons per hamburgueses" "FERRER Cigrons cuits" "BONDUELLE Blat de moro ecològic" "FERRER Allioli" "YOSOY Beguda de civada ecològica" "COMPTA OVELLES Vi negre DO Penedès Km0" "SANT ANIOL Aigua mineral natural 6x1,5 L"
 ```
 
-Per a poder identificar quines són les diferents categories de productes es pot consultar a través de la següent instrucció:
+![img.png](img/captura_consultadistanciaproductes.png)
+**Figura 2.** Captura del procés de consulta de distància de productes
+
+![img_1.png](img/captura_mapadistanciaproductes.png)
+**Figura 3.** Captura del mapa que es desplega amb el posicionament de productes
 
 

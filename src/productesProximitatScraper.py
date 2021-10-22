@@ -7,6 +7,7 @@ import re
 from random import randrange
 from geopy.geocoders import Nominatim
 from geopy import distance
+import plotly.express as px
 
 # Parse command line arguments
 parser = argparse.ArgumentParser()
@@ -334,7 +335,7 @@ def producte(llista_subsubcategories):
                 df = df.append(nova_fila, ignore_index=True)
             except:
                 print('error' + nova_fila)
-                guardaCSV(df, supermercat)
+                guardaCSV(df)
     return df
 
 
@@ -350,7 +351,7 @@ def guardaCSV(df):
     # Defineix el nom del fitxer
 
     #nom_csv = time_string + '_' + supermercat + '_productes.csv'
-    nom_csv = 'proximitat_productes_bonpreu.csv'
+    nom_csv = '../csv/productesProximitat_bonpreu.csv'
     df.to_csv(nom_csv, index=False)
     return
 
@@ -394,8 +395,8 @@ def consultaLlista(args):
     print(geopos)
 
     # Carga CSV de consulta
-    df = pd.read_csv('../csv/Llistat_de_productes.csv')
-
+    df = pd.read_csv('../csv/productesProximitat_bonpreu.csv')
+    df_map = pd.DataFrame()
     # Cerca de proximitat en la llista
     for x in range(len(args.llista)):
         article = (args.llista[x])
@@ -403,14 +404,28 @@ def consultaLlista(args):
                        (df[df['nom_producte'] == str(article)]['longitud'].iloc[0]))
         km = distance.distance(geopos, fabrica_loc).km
         print(article + '- proximitat:' + '%.2f' % km + 'km')
+
+        taula = {'lat': df[df['nom_producte'] == str(article)]['latitud'].iloc[0], 'lon': df[df['nom_producte'] == str(article)]['longitud'].iloc[0], 'distance': km, 'producte': args.llista[x], 'preu': str(df[df['nom_producte'] == str(article)]['preu'].iloc[0])+'€'}
+        df_map = df_map.append(taula, ignore_index=True)
+
+
+    fig = px.scatter_mapbox(df_map, lat="lat", lon="lon", hover_data=["producte", "preu"],
+                                color_discrete_sequence=["fuchsia"], zoom=6, height=600)
+    fig.update_layout(mapbox_style="open-street-map")
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    fig.show()
     return posicio_client
 
 
 if args.baixallista == 'bp':
+    # ex: python productesProximitatScraper.py --baixallista bp
     # Enllaç a la tenda online de BonPreu
     url = 'https://www.compraonline.bonpreuesclat.cat/products?source=navigation'
     baixaLlista(url)
+elif args.localitat != '':
+    # python productesProximitatScraper.py --localitat 08202 Sabadell --llista "NOCILLA Crema de cacau amb avellanes" "EL PASTORET Iogurt estil grec artesà ecològic" "BIMBO Panets rodons per hamburgueses" "FERRER Cigrons cuits" "BONDUELLE Blat de moro ecològic" "FERRER Allioli"
+    consultaLlista(args)
+else:
+    print("Selecciona una acció a través dels paràmetres.")
 
-# python producteProximitatScraper.py --localitat 08202 Sabadell --llista "NOCILLA Crema de cacau amb avellanes" "GULLÓN Galetes de xocolata sense sucres" "BIMBO Panets rodons per hamburgueses" "FERRER Cigrons cuits" "BONDUELLE Blat de moro ecològic"
-# consultaLlista(args)
 
