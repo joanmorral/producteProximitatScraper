@@ -1,5 +1,6 @@
 # producteProximitatScrapper
 
+## 
 Sovint comprem productes sense conèixer la seva procedència. 
 Amb la voluntat de fomentar el quilòmetre 0, el scrapper captura els productes del catàleg de Bon Preu Esclat en la recerca de l'origen dels productes.
 Aleshores, amb l'ajuda d'una API trobem la longitud i latitud relatives al producte, de forma que en un futur permetin identificar la distància entre el productor i el consumidor.

@@ -8,10 +8,6 @@ from random import randrange
 from geopy.geocoders import Nominatim
 from geopy import distance
 
-# Enllaç a la tenda online de BonPreu
-url = 'https://www.compraonline.bonpreuesclat.cat/products?source=navigation'
-supermercat = soup.title.contents[0].split(" ", 1)[0]
-
 # Parse command line arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("--baixallista", help="Si indica que vols descarregar la llista")
@@ -31,6 +27,7 @@ def getPage(url):
     '''
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
+    supermercat = soup.title.contents[0].split(" ", 1)[0]
     return soup
 
 
@@ -300,6 +297,11 @@ def producte(llista_subsubcategories):
     '''
     nova_fila = {}
     df = pd.DataFrame()
+
+    # Consulta la data i la hora
+    named_tuple = time.localtime()
+    time_string = time.strftime("%Y%m%d", named_tuple)
+
     for llista_subsubcategories_url in llista_subsubcategories:
         print(llista_subsubcategories_url.split(';')[0])
         page4 = requests.get(llista_subsubcategories_url.split(';')[1])
@@ -309,10 +311,11 @@ def producte(llista_subsubcategories):
             enllac_producte = 'https://www.compraonline.bonpreuesclat.cat' + categoria4.a.get('href')
             # print(enllac_producte)
             caracteristiques = info_prod_alimentacio(enllac_producte)
-            print(caracteristiques)
+            #print(caracteristiques)
+
             try:
                 location = localitzacio(direccio_prod(caracteristiques))
-                nova_fila = {'cadena': 'BonPreu',
+                nova_fila = {'data': time_string,
                              'subcategoria': llista_subsubcategories_url.split(';')[0],
                              'nom_producte': nom_prod(caracteristiques),
                              'format': format_prod(caracteristiques),
@@ -327,7 +330,7 @@ def producte(llista_subsubcategories):
                              'dades_nutri': nutri_prod(caracteristiques),
                              'instr': instr_prod(caracteristiques)
                              }
-                # print(nova_fila)
+                print(nova_fila)
                 df = df.append(nova_fila, ignore_index=True)
             except:
                 print('error' + nova_fila)
@@ -335,22 +338,24 @@ def producte(llista_subsubcategories):
     return df
 
 
-def guardaCSV(df, supermercat):
+def guardaCSV(df):
     '''
     Funció encarregada de guardar la informació en un CSV
     :param df:
     :return:
     '''
     # Consulta la data i la hora
-    named_tuple = time.localtime()
-    time_string = time.strftime("%Y%m%d_%H%M%S", named_tuple)
+    #named_tuple = time.localtime()
+    #time_string = time.strftime("%Y%m%d", named_tuple)
     # Defineix el nom del fitxer
-    nom_csv = time_string + '_' + supermercat + '_productes.csv'
+
+    #nom_csv = time_string + '_' + supermercat + '_productes.csv'
+    nom_csv = 'proximitat_productes_bonpreu.csv'
     df.to_csv(nom_csv, index=False)
     return
 
 
-def baixaLlista():
+def baixaLlista(url):
     '''
     Funció per a descarregar la llista de productes del supermercat online
     :return:
@@ -370,7 +375,7 @@ def baixaLlista():
     llista_subcategories = getSubcategories(soup, llista_categories)
     llista_2subcategories = getSubcategories(soup, llista_subcategories)
     df = producte(llista_2subcategories)
-    guardaCSV(df, supermercat)
+    guardaCSV(df)
     return
 
 
@@ -389,7 +394,7 @@ def consultaLlista(args):
     print(geopos)
 
     # Carga CSV de consulta
-    df = pd.read_csv('Llistat_de_productes.csv')
+    df = pd.read_csv('../csv/Llistat_de_productes.csv')
 
     # Cerca de proximitat en la llista
     for x in range(len(args.llista)):
@@ -401,9 +406,11 @@ def consultaLlista(args):
     return posicio_client
 
 
-if args.baixallista == 'si':
-    baixaLlista()
+if args.baixallista == 'bp':
+    # Enllaç a la tenda online de BonPreu
+    url = 'https://www.compraonline.bonpreuesclat.cat/products?source=navigation'
+    baixaLlista(url)
 
-# python producteProximitatScrapper.py --localitat 08202 Sabadell --llista "NOCILLA Crema de cacau amb avellanes" "GULLÓN Galetes de xocolata sense sucres" "BIMBO Panets rodons per hamburgueses" "FERRER Cigrons cuits" "BONDUELLE Blat de moro ecològic"
+# python producteProximitatScraper.py --localitat 08202 Sabadell --llista "NOCILLA Crema de cacau amb avellanes" "GULLÓN Galetes de xocolata sense sucres" "BIMBO Panets rodons per hamburgueses" "FERRER Cigrons cuits" "BONDUELLE Blat de moro ecològic"
 # consultaLlista(args)
 
