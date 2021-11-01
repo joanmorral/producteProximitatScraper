@@ -28,6 +28,7 @@ El treball ha estat realitzat en grup, essent-ne els integrants:
 
 - **Readme.md:** exposa breument el contingut de la pràctica
 - **src/**<span style="color:blue">**producteProximitatScrapper.py**</span>: codi font del programa
+- $\color{blue}{[82.537, 83.475] = I_P}$
 - **csv/productesProximitat_bonpreu.csv:** dataset resultant de recórrer la tenda en línia de BonPreu-Esclat
 - **pdf/productesProximitatScraper.pdf:** document pdf amb les respostes formulades a la pràctica
 - **video/productesProximitatScraper.mp4:** video de presentació de la pràctica
