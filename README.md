@@ -5,7 +5,7 @@
 Sovint comprem productes sense conèixer la seva procedència. 
 Amb la voluntat de fomentar el quilòmetre 0 i reduïr la petjada de carboni, el scraper captura els productes del catàleg de Bonpreu-Esclat en la recerca de l'origen dels productes.
 Aleshores, amb l'ajuda d'una API trobem la longitud i latitud relatives al producte, de forma que en un futur permetin identificar la distància entre el productor i el consumidor.
-El resultat és una forma senzilla de contribuir en el objectiu 12 de consum responsable en els The Global Goals 2030.  
+El resultat és una forma senzilla de contribuir en el objectiu 12 de consum responsable en els *The Global Goals 2030*.  
 &nbsp;\
 ![img.png](img/infographic_cc_globalgoals2030.png)
 
