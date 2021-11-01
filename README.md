@@ -29,9 +29,11 @@ El treball ha estat realitzat en grup, essent-ne els integrants:
 - **Readme.md:** exposa breument el contingut de la pràctica
 - **src/producteProximitatScrapper.py:** codi font del programa
 - **csv/productesProximitat_bonpreu.csv:** dataset resultant de recórrer la tenda en línia de BonPreu-Esclat
-- **pdf/productesProximitatScraper.pdf:** document pdf amb les respostes
-- **pres/productesProximitatScraper_video.mp4:** gravació de la presentació
-- **pres/productesProximitatScraper_slides.pptx:** suport emprat en la presentació del fitxer 
+- **pdf/productesProximitatScraper.pdf:** document pdf amb les respostes formulades a la pràctica
+- **video/productesProximitatScraper.mp4:** video de presentació de la pràctica
+- **pres/*.*:** suport emprat en la presentació del fitxer
+- **img/*.*:** suport emprat en l'elaboració del fitxer *Readme.md*
+
 ## DOI del dataset generat
 
 El dataset generat porta per títol ***Proximitat de productes venuts a Bonpreu-Esclat.***.  
