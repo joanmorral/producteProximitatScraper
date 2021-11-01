@@ -57,7 +57,7 @@ Per a descarregar la llista del supermercat BonPreu-Esclat cal emprar la següen
 ```python
 python productesProximitatScraper.py --baixallista bp
 ```
-![img.png](img/captura_procescarregaproductes.png)
+![img.png](img/captura_procescarregaproductes.png)  
 **Figura 1.** Captura del procés de càrrega
 
 ### Consulta de la distància dels articles d'una llista de la compra
@@ -70,10 +70,10 @@ A continuació es presenta un exemple:
 python productesProximitatScraper.py --localitat 08202 Sabadell --llista "NOCILLA Crema de cacau amb avellanes" "EL PASTORET Iogurt estil grec artesà ecològic" "BIMBO Panets rodons per hamburgueses" "FERRER Cigrons cuits" "BONDUELLE Blat de moro ecològic" "FERRER Allioli" "YOSOY Beguda de civada ecològica" "COMPTA OVELLES Vi negre DO Penedès Km0" "SANT ANIOL Aigua mineral natural 6x1,5 L"
 ```
 
-![img.png](img/captura_consultadistanciaproductes.png)
+![img.png](img/captura_consultadistanciaproductes.png)  
 **Figura 2.** Captura del procés de consulta de distància de productes
 
-![img_1.png](img/captura_mapadistanciaproductes.png)
+![img_1.png](img/captura_mapadistanciaproductes.png)  
 **Figura 3.** Captura del mapa que es desplega amb el posicionament de productes
 
 
