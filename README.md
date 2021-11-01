@@ -58,7 +58,6 @@ Per a descarregar la llista del supermercat BonPreu-Esclat cal emprar la següen
 python productesProximitatScraper.py --baixallista bp
 ```
 ![img.png](img/captura_procescarregaproductes.png)
-
 **Figura 1.** Captura del procés de càrrega
 
 ### Consulta de la distància dels articles d'una llista de la compra
