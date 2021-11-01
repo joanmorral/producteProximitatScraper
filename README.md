@@ -30,7 +30,7 @@ El treball ha estat realitzat en grup, essent-ne els integrants:
 - **src/producteProximitatScrapper.py:** codi font del programa
 - **csv/productesProximitat_bonpreu.csv:** dataset resultant de recórrer la tenda en línia de BonPreu-Esclat
 - **pdf/productesProximitatScraper.pdf:** document pdf amb les respostes formulades a la pràctica
-- **video/\*.\*:**:** vídeo de presentació de la pràctica, estructurat en capítols en format mp4
+- **video/\*.\*:** vídeo de presentació de la pràctica, estructurat en capítols en format mp4
 - **pres/\*.\*:** suport emprat en la presentació del fitxer
 - **img/\*.\*:** suport emprat en l'elaboració del fitxer *Readme.md*
 
