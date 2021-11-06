@@ -36,7 +36,7 @@ El treball ha estat realitzat en grup, essent-ne els integrants:
 
 ## DOI del dataset generat
 
-El dataset generat porta per títol ***Proximitat de productes venuts a Bonpreu-Esclat***.  
+El dataset generat porta per títol ***Proximitat de productes venuts a Bonpreu-Esclat***, i està publicat a Zenodo.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5650736.svg)](https://doi.org/10.5281/zenodo.5650736)
 
