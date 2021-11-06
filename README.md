@@ -37,7 +37,8 @@ El treball ha estat realitzat en grup, essent-ne els integrants:
 ## DOI del dataset generat
 
 El dataset generat porta per títol ***Proximitat de productes venuts a Bonpreu-Esclat***.  
-Es troba emmagatzemat en format CSV a Zenodo, amb DOI: 
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5650736.svg)](https://doi.org/10.5281/zenodo.5650736)
 
 ## Instruccions d'execució
 L'entorn d'execució del programa pot ser des de la mateixa consola o terminal. En un entorn Windows es pot accedir executant la comanda cmd un cop desplegat el menú de inici. Aleshores, cal cercar el directori on es troba el codi i executar-lo posant davant la instrucció python. 
