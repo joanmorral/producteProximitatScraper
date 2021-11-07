@@ -79,12 +79,13 @@ python productesProximitatScraper.py --localitat 08202 Sabadell --llista "NOCILL
 ![img_1.png](img/captura_mapadistanciaproductes.png)  
 **Figura 3.** Captura del mapa que es desplega amb el posicionament de productes
 
-## Vídeo de presentació
+## Vídeo de presentació de la pràctica
 
-El vídeo de presentació està estructurat en els capítols que es presenten a continuació. Cal dir que s'ha primat el nivell de detall en l'explicació de la pràctica. Atès el repartiment de la creació de cadascun dels capítols, el capítol 5 s'ha hagut d'emmagatzemar en un suport extern a Github degut al seu tamany (els capítols inicials estàn a la carpeta *video*)
+El vídeo de presentació s'ha dividit en capítols, per tal de facilitar la seva estructuració i creació. Cal enfasitzar que s'ha primat el nivell de detall en l'explicació de la pràctica. Atès el seu tamany, el darrer capítol s'ha hagut d'emmagatzemar en un suport extern a Github, per bé que els altres es troben a la carpeta *video*. 
 
  - [Capítol 1: Introducció](https://github.com/joanmorral/producteProximitatScraper/blob/master/video/Capitol_1_introduccio.mp4)
- - [Capítol 2: Presentació Nico](https://github.com/joanmorral/producteProximitatScraper/blob/master/video/Capitol_2_presentacions_equip.mp4)
+ - [Capítol 2: Presentació](https://github.com/joanmorral/producteProximitatScraper/blob/master/video/Capitol_2_presentacions_equip.mp4)
  - [Capítol 3: Metodologia](https://github.com/joanmorral/producteProximitatScraper/blob/master/video/Capitol_3_metodologia.mp4)
  - [Capítol 4: Context funcional](https://github.com/joanmorral/producteProximitatScraper/blob/master/video/Capitol_4_part_funcional.mp4)
  - [Capítol 5: Execució del projecte](https://www.youtube.com/watch?v=XA1Hhsu51x4)
+ 
