@@ -79,4 +79,6 @@ python productesProximitatScraper.py --localitat 08202 Sabadell --llista "NOCILL
 ![img_1.png](img/captura_mapadistanciaproductes.png)  
 **Figura 3.** Captura del mapa que es desplega amb el posicionament de productes
 
+## Vídeo de presentació
+[![Alt text](https://img.youtube.com/vi/8qG5STuPSa0/0.jpg)](https://www.youtube.com/watch?v=8qG5STuPSa0)
 
