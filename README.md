@@ -87,6 +87,4 @@ El vídeo de presentació està estructurat en els capítols que es presenten a 
  - [Capítol 2: Presentació Nico](https://github.com/joanmorral/producteProximitatScraper/blob/master/video/Capitol_2_presentacions_equip.mp4)
  - [Capítol 3: Metodologia](https://github.com/joanmorral/producteProximitatScraper/blob/master/video/Capitol_3_metodologia.mp4)
  - [Capítol 4: Context funcional](https://github.com/joanmorral/producteProximitatScraper/blob/master/video/Capitol_4_part_funcional.mp4)
- - [Capítol 5: Execució del porjecte](https://www.youtube.com/watch?v=XA1Hhsu51x4)
-
-[![Alt text](https://img.youtube.com/vi/XA1Hhsu51x4/0.jpg)](https://www.youtube.com/watch?v=XA1Hhsu51x4)
+ - [Capítol 5: Execució del projecte](https://www.youtube.com/watch?v=XA1Hhsu51x4)
