@@ -30,7 +30,7 @@ El treball ha estat realitzat en grup, essent-ne els integrants:
 - **src/producteProximitatScrapper.py:** codi font del programa
 - **csv/productesProximitat_bonpreu.csv:** dataset resultant de recórrer la tenda en línia de BonPreu-Esclat
 - **pdf/productesProximitatScraper.pdf:** document pdf amb les respostes formulades a la pràctica
-- **video/\*.\*:** vídeo de presentació de la pràctica, estructurat en capítols en format mp4
+- **video/\*.\*:** vídeos de presentació de la pràctica, estructurats en capítols en format mp4 (tamany < 25 MB)
 - **pres/\*.\*:** suport emprat en la presentació del fitxer
 - **img/\*.\*:** suport emprat en l'elaboració del fitxer *Readme.md*
 
@@ -80,4 +80,13 @@ python productesProximitatScraper.py --localitat 08202 Sabadell --llista "NOCILL
 **Figura 3.** Captura del mapa que es desplega amb el posicionament de productes
 
 ## Vídeo de presentació
+
+El vídeo de presentació està estructurat en els capítols que es presenten a continuació. Cal dir que s'ha primat el nivell de detall en l'explicació de la pràctica. Atès el repartiment de la creació de cadascun dels capítols, el capítol 5 s'ha hagut d'emmagatzemar en un suport extern a Github degut al seu tamany (els capítols inicials estàn a la carpeta *video*)
+
+ - [Capítol 1: Introducció](https://github.com/joanmorral/producteProximitatScraper/blob/master/video/Capitol_1_introduccio.mp4)
+ - [Capítol 2: Presentació Nico](https://github.com/joanmorral/producteProximitatScraper/blob/master/video/Capitol_2_presentacions_equip.mp4)
+ - [Capítol 3: Metodologia](https://github.com/joanmorral/producteProximitatScraper/blob/master/video/Capitol_3_metodologia.mp4)
+ - [Capítol 4: Context funcional](https://github.com/joanmorral/producteProximitatScraper/blob/master/video/Capitol_4_part_funcional.mp4)
+ - [Capítol 5: Execució del porjecte](https://www.youtube.com/watch?v=XA1Hhsu51x4)
+
 [![Alt text](https://img.youtube.com/vi/XA1Hhsu51x4/0.jpg)](https://www.youtube.com/watch?v=XA1Hhsu51x4)
